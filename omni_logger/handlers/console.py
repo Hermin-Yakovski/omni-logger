@@ -1,14 +1,22 @@
-"""Console handler stub - will be implemented in Task 5."""
-from logging import StreamHandler
+"""Console handler factory."""
+import logging
+import sys
+
+from omni_logger.config import ConsoleHandlerConfig
+from omni_logger.utils.validation import validate_log_level
 
 
-def create_console_handler(config):
-    """Stub console handler factory.
+def create_console_handler(config: ConsoleHandlerConfig) -> logging.StreamHandler:
+    """Create a console handler.
 
     Args:
-        config: Handler configuration
+        config: Console handler configuration
 
     Returns:
-        StreamHandler instance
+        Configured console handler
     """
-    return StreamHandler()
+    handler = logging.StreamHandler(sys.stdout)
+    level_name = validate_log_level(config.level)
+    handler.setLevel(getattr(logging, level_name))
+    handler.setFormatter(logging.Formatter(fmt=config.fmt, datefmt=config.datefmt))
+    return handler
