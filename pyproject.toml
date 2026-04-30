@@ -1,0 +1,34 @@
+[tool.poetry]
+name = "omni-logger"
+version = "0.1.0"
+description = "Customizable logger with handler registry pattern"
+authors = ["yehemin <yehemin@example.com>"]
+readme = "README.md"
+packages = [{include = "omni_logger"}]
+include = ["omni_logger/py.typed"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+concurrent-log-handler = "^0.9.0"
+requests = "^2.31.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-mock = "^3.11.0"
+ruff = "^0.8"
+mypy = "^1.10"
+pytest-cov = "^7.1.0"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
