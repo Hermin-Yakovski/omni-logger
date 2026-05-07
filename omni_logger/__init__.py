@@ -3,10 +3,9 @@
 import logging
 
 from omni_logger import config
-from omni_logger.config import LogConfig
 
 
-def set_logger(name: str, config: LogConfig) -> logging.Logger:
+def set_logger(name: str, config: config.LogConfig) -> logging.Logger:
     """Create and configure a logger with the specified configuration.
 
     Args:

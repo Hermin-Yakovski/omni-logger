@@ -3,7 +3,8 @@ import logging
 
 import pytest
 
-from omni_logger import set_logger, LogConfig
+from omni_logger import set_logger
+from omni_logger.config import LogConfig
 
 
 def test_set_logger_creates_logger_with_console_handler(tmp_path):

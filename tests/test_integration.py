@@ -2,8 +2,8 @@
 import logging
 
 
-from omni_logger import set_logger, get_logger, LogConfig
-from omni_logger.config import FileHandlerConfig
+from omni_logger import set_logger, get_logger
+from omni_logger.config import FileHandlerConfig, LogConfig
 
 
 def test_get_logger_returns_same_as_logging_getLogger():
