@@ -4,7 +4,6 @@ import logging
 
 from omni_logger import config
 from omni_logger.config import LogConfig
-from omni_logger.handlers import get_handler_class  # noqa: F401 (used internally)
 
 
 def set_logger(name: str, config: LogConfig) -> logging.Logger:
@@ -21,6 +20,8 @@ def set_logger(name: str, config: LogConfig) -> logging.Logger:
         ValueError: If handler name in config.handlers is unknown
         OSError: If log directory cannot be created
     """
+    from omni_logger.handlers import get_handler_class
+
     logger = logging.getLogger(name)
     logger.handlers.clear()  # Clear existing handlers
 
