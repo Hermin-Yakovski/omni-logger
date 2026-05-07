@@ -2,8 +2,9 @@
 """omni-logger: Configurable logging with handler registry pattern."""
 import logging
 
+from omni_logger import config
 from omni_logger.config import LogConfig
-from omni_logger.handlers import get_handler_class
+from omni_logger.handlers import get_handler_class  # noqa: F401 (used internally)
 
 
 def set_logger(name: str, config: LogConfig) -> logging.Logger:
@@ -69,4 +70,4 @@ def get_logger(name: str) -> logging.Logger:
     return logging.getLogger(name)
 
 
-__all__ = ["set_logger", "get_logger", "LogConfig"]
+__all__ = ["set_logger", "get_logger", "config"]

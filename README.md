@@ -19,7 +19,8 @@ pip install omni-logger
 
 ```python
 # main.py - Application entry point
-from omni_logger import set_logger, LogConfig
+from omni_logger import set_logger
+from omni_logger.config import LogConfig
 
 # Configure logger with console and file handlers
 set_logger("my_app", LogConfig(
@@ -39,8 +40,8 @@ logger.error("Something went wrong")
 ### Console Handler
 
 ```python
-from omni_logger import set_logger, LogConfig
-from omni_logger.config import ConsoleHandlerConfig
+from omni_logger import set_logger
+from omni_logger.config import LogConfig, ConsoleHandlerConfig
 
 set_logger("my_app", LogConfig(
     console=ConsoleHandlerConfig(
@@ -54,8 +55,8 @@ set_logger("my_app", LogConfig(
 
 ```python
 from pathlib import Path
-from omni_logger import set_logger, LogConfig
-from omni_logger.config import FileHandlerConfig
+from omni_logger import set_logger
+from omni_logger.config import LogConfig, FileHandlerConfig
 
 set_logger("my_app", LogConfig(
     handlers=["console", "file"],
@@ -71,7 +72,8 @@ set_logger("my_app", LogConfig(
 
 ```python
 import os
-from omni_logger import set_logger, get_logger, LogConfig
+from omni_logger import set_logger, get_logger
+from omni_logger.config import LogConfig
 
 # Set environment variables
 os.environ["ALGO_SERVICES_DINGTALK_ACCESS_TOKEN"] = "your_token"
