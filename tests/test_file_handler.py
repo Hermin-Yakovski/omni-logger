@@ -1,9 +1,6 @@
 # tests/test_file_handler.py
 import logging
-from pathlib import Path
-import tempfile
 
-import pytest
 
 from omni_logger.config import FileHandlerConfig
 from omni_logger.handlers.file import create_file_handler
@@ -20,7 +17,7 @@ def test_create_file_handler_default_config(tmp_path):
 def test_create_file_handler_creates_log_dir(tmp_path):
     log_dir = tmp_path / "nested" / "logs"
     config = FileHandlerConfig(log_dir=log_dir)
-    handler = create_file_handler("test_logger", config)
+    create_file_handler("test_logger", config)
     assert log_dir.exists()
 
 

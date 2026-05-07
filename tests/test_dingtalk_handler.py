@@ -1,9 +1,7 @@
 # tests/test_dingtalk_handler.py
 import logging
 import os
-from unittest.mock import MagicMock, patch
 
-import pytest
 
 from omni_logger.handlers.dingtalk import DingtalkErrorHandler
 

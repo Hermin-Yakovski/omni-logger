@@ -2,7 +2,6 @@
 import logging
 from pathlib import Path
 
-import pytest
 
 from omni_logger.config import (
     LogConfig,

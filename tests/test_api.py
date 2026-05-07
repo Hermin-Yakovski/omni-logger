@@ -1,11 +1,9 @@
 # tests/test_api.py
 import logging
-from pathlib import Path
-import tempfile
 
 import pytest
 
-from omni_logger import set_logger, get_logger, LogConfig
+from omni_logger import set_logger, LogConfig
 
 
 def test_set_logger_creates_logger_with_console_handler(tmp_path):

@@ -1,7 +1,7 @@
 # tests/test_validation.py
 import pytest
 
-from omni_logger.utils.validation import validate_log_level, VALID_LEVELS
+from omni_logger.utils.validation import validate_log_level
 
 
 def test_valid_log_levels():

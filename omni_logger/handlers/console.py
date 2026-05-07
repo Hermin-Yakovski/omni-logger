@@ -6,7 +6,7 @@ from omni_logger.config import ConsoleHandlerConfig
 from omni_logger.utils.validation import validate_log_level
 
 
-def create_console_handler(config: ConsoleHandlerConfig) -> logging.StreamHandler:
+def create_console_handler(config: ConsoleHandlerConfig) -> logging.Handler:
     """Create a console handler.
 
     Args:

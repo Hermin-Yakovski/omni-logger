@@ -19,7 +19,7 @@ class DingtalkErrorHandler(logging.Handler):
     _signature: str
     _url_body: str
 
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__()
         self._access_token = os.getenv("ALGO_SERVICES_DINGTALK_ACCESS_TOKEN", "")
         self._signature = os.getenv("ALGO_SERVICES_DINGTALK_SIGNATURE", "")
@@ -42,7 +42,7 @@ class DingtalkErrorHandler(logging.Handler):
         sign = quote_plus(base64.b64encode(hmac_code).decode("utf-8"))
         return self._url_body + f"?access_token={self._access_token}&timestamp={timestamp}&sign={sign}"
 
-    def emit(self, record: logging.LogRecord):
+    def emit(self, record: logging.LogRecord) -> None:
         """Emit a log record if level is ERROR or above.
 
         Missing credentials or send failures are logged to stderr but don't crash.
@@ -57,7 +57,7 @@ class DingtalkErrorHandler(logging.Handler):
         self.format(record)
         self.send(record)
 
-    def send(self, record: logging.LogRecord):
+    def send(self, record: logging.LogRecord) -> None:
         """Send log record to Dingtalk.
 
         Send failures are printed to stderr but don't propagate.

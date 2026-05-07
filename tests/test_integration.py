@@ -1,9 +1,6 @@
 # tests/test_integration.py
 import logging
-from pathlib import Path
-import tempfile
 
-import pytest
 
 from omni_logger import set_logger, get_logger, LogConfig
 from omni_logger.config import FileHandlerConfig
