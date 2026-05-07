@@ -39,7 +39,8 @@ logger.error("Something went wrong")
 ### Console Handler
 
 ```python
-from omni_logger import set_logger, LogConfig, ConsoleHandlerConfig
+from omni_logger import set_logger, LogConfig
+from omni_logger.config import ConsoleHandlerConfig
 
 set_logger("my_app", LogConfig(
     console=ConsoleHandlerConfig(
@@ -52,7 +53,9 @@ set_logger("my_app", LogConfig(
 ### File Handler with Rotation
 
 ```python
-from omni_logger import set_logger, LogConfig, FileHandlerConfig
+from pathlib import Path
+from omni_logger import set_logger, LogConfig
+from omni_logger.config import FileHandlerConfig
 
 set_logger("my_app", LogConfig(
     handlers=["console", "file"],
@@ -68,7 +71,7 @@ set_logger("my_app", LogConfig(
 
 ```python
 import os
-from omni_logger import set_logger, LogConfig
+from omni_logger import set_logger, get_logger, LogConfig
 
 # Set environment variables
 os.environ["ALGO_SERVICES_DINGTALK_ACCESS_TOKEN"] = "your_token"
@@ -77,6 +80,9 @@ os.environ["ALGO_SERVICES_DINGTALK_SIGNATURE"] = "your_signature"
 set_logger("my_app", LogConfig(
     handlers=["console", "dingtalk"]
 ))
+
+# Get the logger instance
+logger = get_logger("my_app")
 
 # ERROR and above will be sent to Dingtalk
 logger.error("Critical failure!")
