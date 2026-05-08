@@ -37,7 +37,48 @@ logger.error("Something went wrong")
 
 ## Configuration
 
+### LogConfig
+
+Main configuration dataclass that controls which handlers are enabled and their settings.
+
+**Arguments:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `handlers` | `list[str]` | `["console"]` | List of active handler names (`"console"`, `"file"`, `"dingtalk"`) |
+| `console` | `ConsoleHandlerConfig` | `ConsoleHandlerConfig()` | Console handler settings |
+| `file` | `FileHandlerConfig` | `FileHandlerConfig()` | File handler settings |
+| `dingtalk` | `DingtalkHandlerConfig` | `DingtalkHandlerConfig()` | Dingtalk handler settings |
+
+**Default Behavior:**
+
+All handler configs have sensible defaults. You only need to specify what you want to override:
+
+```python
+# Uses default handler: ["console"]
+set_logger("my_app", LogConfig())
+
+# Uses default console handler settings (level="INFO", default format)
+set_logger("my_app", LogConfig(handlers=["console"]))
+
+# Override only the level, keep other defaults
+set_logger("my_app", LogConfig(
+    handlers=["console"],
+    console=ConsoleHandlerConfig(level="DEBUG")
+))
+```
+
+Handler configs not explicitly provided will use their default values.
+
 ### Console Handler
+
+**Arguments:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `level` | `str` | `"INFO"` | Minimum log level (`"DEBUG"`, `"INFO"`, `"WARNING"`, `"ERROR"`, `"CRITICAL"`) |
+| `fmt` | `str` | `"%(asctime)s - %(name)s - %(levelname)s - %(message)s"` | Log message format string |
+| `datefmt` | `str` | `"%Y-%m-%d %H:%M:%S"` | Timestamp format |
 
 ```python
 from omni_logger import set_logger
@@ -52,6 +93,17 @@ set_logger("my_app", LogConfig(
 ```
 
 ### File Handler with Rotation
+
+**Arguments:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `level` | `str` | `"INFO"` | Minimum log level |
+| `log_dir` | `Path` | `Path("./logs")` | Directory for log files (created if missing) |
+| `max_bytes` | `int` | `10485760` (10MB) | Max file size before rotation |
+| `backup_count` | `int` | `5` | Number of backup files to keep |
+| `fmt` | `str` | `"%(asctime)s - %(name)s - %(levelname)s - %(message)s"` | Log message format |
+| `datefmt` | `str` | `"%Y-%m-%d %H:%M:%S"` | Timestamp format |
 
 ```python
 from pathlib import Path
@@ -69,6 +121,19 @@ set_logger("my_app", LogConfig(
 ```
 
 ### Dingtalk Error Notifications
+
+**Arguments:**
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `level` | `str` | `"ERROR"` | Minimum log level (typically `"ERROR"` or `"CRITICAL"`) |
+
+**Required Environment Variables:**
+
+| Variable | Description |
+|----------|-------------|
+| `ALGO_SERVICES_DINGTALK_ACCESS_TOKEN` | Dingtalk webhook access token |
+| `ALGO_SERVICES_DINGTALK_SIGNATURE` | Dingtalk webhook signature secret |
 
 ```python
 import os
@@ -90,6 +155,8 @@ logger = get_logger("my_app")
 logger.error("Critical failure!")
 ```
 
+**Note:** Missing credentials are silently logged to stderr without crashing.
+
 ## API Reference
 
 ### `set_logger(name: str, config: LogConfig) -> logging.Logger`
@@ -97,7 +164,7 @@ logger.error("Critical failure!")
 Create and configure a logger with the specified configuration.
 
 - **name**: Logger name (use `__name__` for modules)
-- **config**: `LogConfig` dataclass with handler configuration
+- **config**: `LogConfig` dataclass from `omni_logger.config`
 
 ### `get_logger(name: str) -> logging.Logger`
 
@@ -105,14 +172,15 @@ Get a previously configured logger by name.
 
 - **name**: Logger name
 
-### `LogConfig`
+### `config`
 
-Main configuration dataclass.
+Configuration module containing handler dataclasses.
 
-- **handlers**: List of handler names (`["console"]`, `["console", "file"]`, etc.)
-- **console**: `ConsoleHandlerConfig` — Console output settings
-- **file**: `FileHandlerConfig` — Rotating file settings
-- **dingtalk**: `DingtalkHandlerConfig` — Dingtalk notification settings
+Import handler configs from `omni_logger.config`:
+
+```python
+from omni_logger.config import LogConfig, ConsoleHandlerConfig, FileHandlerConfig, DingtalkHandlerConfig
+```
 
 ## Development
 
