@@ -3,16 +3,17 @@ import logging
 import os
 
 
+from omni_logger.config import DingtalkHandlerConfig
 from omni_logger.handlers.dingtalk import DingtalkErrorHandler
 
 
 def test_dingtalk_handler_filters_below_error():
-    handler = DingtalkErrorHandler()
+    handler = DingtalkErrorHandler(DingtalkHandlerConfig())
     assert handler.level >= logging.ERROR
 
 
 def test_dingtalk_handler_emits_error_records(mock_requests_post, mock_dingtalk_env):
-    handler = DingtalkErrorHandler()
+    handler = DingtalkErrorHandler(DingtalkHandlerConfig())
     record = logging.LogRecord(
         name="test",
         level=logging.ERROR,
@@ -27,7 +28,7 @@ def test_dingtalk_handler_emits_error_records(mock_requests_post, mock_dingtalk_
 
 
 def test_dingtalk_handler_ignores_info_records(mock_requests_post):
-    handler = DingtalkErrorHandler()
+    handler = DingtalkErrorHandler(DingtalkHandlerConfig())
     record = logging.LogRecord(
         name="test",
         level=logging.INFO,
@@ -46,7 +47,7 @@ def test_dingtalk_handler_missing_env_vars_logs_warning(capfd):
     os.environ.pop("ALGO_SERVICES_DINGTALK_ACCESS_TOKEN", None)
     os.environ.pop("ALGO_SERVICES_DINGTALK_SIGNATURE", None)
 
-    handler = DingtalkErrorHandler()
+    handler = DingtalkErrorHandler(DingtalkHandlerConfig())
     record = logging.LogRecord(
         name="test",
         level=logging.ERROR,
@@ -68,7 +69,7 @@ def test_dingtalk_handler_send_failure_prints_to_stderr(capfd, mock_requests_pos
 
     mock_requests_post.side_effect = Exception("Network error")
 
-    handler = DingtalkErrorHandler()
+    handler = DingtalkErrorHandler(DingtalkHandlerConfig())
     record = logging.LogRecord(
         name="test",
         level=logging.ERROR,

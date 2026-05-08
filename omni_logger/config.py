@@ -29,6 +29,8 @@ class DingtalkHandlerConfig:
     """Dingtalk error handler configuration."""
     level: str = "ERROR"
     min_level: int = logging.ERROR
+    fmt: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    datefmt: str = "%Y-%m-%d %H:%M:%S"
 
 
 @dataclass

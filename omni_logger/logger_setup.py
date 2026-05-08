@@ -45,7 +45,7 @@ def set_logger(name: str, config: config.LogConfig) -> logging.Logger:
         elif handler_name == "file":
             handler = handler_class(name, config.file)
         elif handler_name == "dingtalk":
-            handler = handler_class()
+            handler = handler_class(config.dingtalk)
         else:
             # This shouldn't happen as get_handler_class validates
             continue

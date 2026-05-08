@@ -11,6 +11,8 @@ from urllib.parse import quote_plus
 
 import requests
 
+from ..config import DingtalkHandlerConfig
+
 
 class DingtalkErrorHandler(logging.Handler):
     """Send ERROR and above log records to Dingtalk webhook."""
@@ -19,17 +21,17 @@ class DingtalkErrorHandler(logging.Handler):
     _signature: str
     _url_body: str
 
-    def __init__(self) -> None:
+    def __init__(self, config: DingtalkHandlerConfig) -> None:
         super().__init__()
         self._access_token = os.getenv("ALGO_SERVICES_DINGTALK_ACCESS_TOKEN", "")
         self._signature = os.getenv("ALGO_SERVICES_DINGTALK_SIGNATURE", "")
         self._url_body = "https://oapi.dingtalk.com/robot/send"
 
-        # Set level to ERROR by default
-        self.setLevel(logging.ERROR)
+        # Set level from config
+        self.setLevel(getattr(logging, config.level))
 
-        # Add a default formatter to ensure asctime is available
-        self.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+        # Add formatter from config
+        self.setFormatter(logging.Formatter(fmt=config.fmt, datefmt=config.datefmt))
 
     def _generate_url_with_timestamp(self) -> str:
         """Generate signed URL with timestamp."""

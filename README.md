@@ -127,6 +127,8 @@ set_logger("my_app", LogConfig(
 | Parameter | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `level` | `str` | `"ERROR"` | Minimum log level (typically `"ERROR"` or `"CRITICAL"`) |
+| `fmt` | `str` | `"%(asctime)s - %(name)s - %(levelname)s - %(message)s"` | Log message format string |
+| `datefmt` | `str` | `"%Y-%m-%d %H:%M:%S"` | Timestamp format |
 
 **Required Environment Variables:**
 
@@ -153,6 +155,18 @@ logger = get_logger("my_app")
 
 # ERROR and above will be sent to Dingtalk
 logger.error("Critical failure!")
+```
+
+```python
+from omni_logger.config import LogConfig, DingtalkHandlerConfig
+
+set_logger("my_app", LogConfig(
+    handlers=["dingtalk"],
+    dingtalk=DingtalkHandlerConfig(
+        level="CRITICAL",
+        fmt="%(levelname)s [%(name)s] %(message)s"
+    )
+))
 ```
 
 **Note:** Missing credentials are silently logged to stderr without crashing.
